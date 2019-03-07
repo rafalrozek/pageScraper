@@ -35,6 +35,6 @@ def getOffers(count, section):
             offers.append(of)
             #print (of.date)
             if (len(offers) == count):
-                print(f"Pobrano {len(offers)} ofert z działu #{section}.")
+                print(f"Pobrano: {len(offers)} ofert z działu #{section}.")
                 return offers
 
