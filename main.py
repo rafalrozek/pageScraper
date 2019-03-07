@@ -3,7 +3,7 @@ import numpy as np
 from offers import getOffers
 from datetime import datetime, timedelta
 
-print("Pobieranie danych..")
+print("Pobieranie danych...")
 offers = getOffers(10, 102)
 offers2 = getOffers(10, 328)
 offers3 = getOffers(10, 102)
