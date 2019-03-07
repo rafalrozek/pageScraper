@@ -4,9 +4,9 @@ from offers import getOffers
 from datetime import datetime, timedelta
 
 print("Pobieranie danych...")
-offers = getOffers(10, 102)
-offers2 = getOffers(10, 328)
-offers3 = getOffers(10, 102)
+offers = getOffers(300, 102)
+offers2 = getOffers(300, 328)
+offers3 = getOffers(300, 102)
 
 #generate data
 xt = [(datetime.today() - timedelta(days=x)).strftime('%m-%d') for x in range(30, -1, -1)]
