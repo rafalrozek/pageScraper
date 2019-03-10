@@ -2,17 +2,17 @@ from bs4 import BeautifulSoup
 import requests
 
 class Offer:
-    def __init__(self, data):
-        self.title = data.findAll('h3')[0].text
-        self.isPromoted = (data.find(class_='announcements-list-work-box-promo') is not None)
-        self.desc = data.findAll('p')[0].text
-        if (self.isPromoted):
-            id = data.findAll('span')[2].text
-            self.date = data.findAll('span')[1].text[5:10]
-        else:
-            id = data.findAll('span')[1].text
-            self.date = data.findAll('span')[0].text[5:10]
-        self.id = int(id[1:])
+    def __init__(self, data, section):
+            self.title = data.find('h3').text
+            self.isPromoted = (data.find(class_='announcements-list-work-box-promo') is not None)
+            self.desc = data.find('p').text
+            self.date = data.findAll('span')[-1].text[5:10]
+            if (section == 328 or section == 102):
+                self.date = data.findAll('span')[-2].text[5:10]
+            else:
+                self.date = data.findAll('span')[-1].text[5:10]
+            #print(data)
+            #print(f"{self.title} {self.isPromoted} {self.date}")
 
 def getOffers(count, section):
     site = "https://ddwloclawek.pl/pl/_ajax/getMore.php"
@@ -23,7 +23,7 @@ def getOffers(count, section):
             data = {'tryb': 'getOgloszenie', 'ile': i, 'dzial': section}
             req = requests.post(site, data)
         except ValueError:
-            print ("Connection error")
+            print("Connection error")
             exit(1)
 
         html = BeautifulSoup(req.text, 'html.parser').findAll(class_='oglWyk')
@@ -31,7 +31,7 @@ def getOffers(count, section):
             print(f"Pobrano {len(offers)} ofert z działu #{section}.")
             return offers
         for offer in html:
-            of = Offer(offer)
+            of = Offer(offer, section)
             offers.append(of)
             #print (of.date)
             if (len(offers) == count):
